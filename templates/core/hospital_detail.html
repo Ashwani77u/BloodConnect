@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>{{ hospital.name }} | BloodConnect</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: #f4f6f8;
+            color: #333;
+        }
+
+        .header {
+            background: linear-gradient(
+                135deg,
+                #8b0000,
+                #c62828
+            );
+
+            color: white;
+            padding: 18px 5%;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .brand {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .back {
+            background: white;
+            color: #b71c1c;
+            text-decoration: none;
+            padding: 10px 16px;
+            border-radius: 8px;
+            font-weight: bold;
+        }
+
+        .container {
+            width: 92%;
+            max-width: 900px;
+            margin: 35px auto;
+        }
+
+        .card {
+            background: white;
+            padding: 30px;
+            border-radius: 18px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+        }
+
+        .title {
+            color: #b71c1c;
+            font-size: 30px;
+            margin-bottom: 8px;
+        }
+
+        .hospital-id {
+            color: #777;
+            margin-bottom: 25px;
+        }
+
+        .status {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 25px;
+        }
+
+        .badge {
+            padding: 7px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        .verified {
+            background: #e8f5e9;
+            color: #2e7d32;
+        }
+
+        .active {
+            background: #e3f2fd;
+            color: #1565c0;
+        }
+
+        .inactive {
+            background: #ffebee;
+            color: #c62828;
+        }
+
+        .section {
+            margin-top: 25px;
+        }
+
+        .section h2 {
+            color: #b71c1c;
+            font-size: 20px;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 8px;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 18px;
+        }
+
+        .info {
+            background: #fafafa;
+            padding: 15px;
+            border-radius: 10px;
+        }
+
+        .label {
+            color: #888;
+            font-size: 12px;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+        }
+
+        .value {
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .blood-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        .blood-table th,
+        .blood-table td {
+            padding: 12px;
+            border-bottom: 1px solid #eee;
+            text-align: left;
+        }
+
+        .blood-table th {
+            background: #fce4ec;
+            color: #b71c1c;
+        }
+
+        .units {
+            font-weight: bold;
+        }
+
+        @media (max-width: 650px) {
+
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .card {
+                padding: 20px;
+            }
+
+            .title {
+                font-size: 25px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="header">
+
+    <div class="brand">
+        🩸 BloodConnect
+    </div>
+
+    <a href="{% url 'manage_hospitals' %}" class="back">
+        ← Back
+    </a>
+
+</div>
+
+
+<div class="container">
+
+    <div class="card">
+
+        <h1 class="title">
+            🏥 {{ hospital.name }}
+        </h1>
+
+        <p class="hospital-id">
+            Hospital ID: {{ hospital.hospital_id }}
+        </p>
+
+
+        <div class="status">
+
+            {% if hospital.is_verified %}
+                <span class="badge verified">
+                    ✅ Verified
+                </span>
+            {% else %}
+                <span class="badge inactive">
+                    ⏳ Not Verified
+                </span>
+            {% endif %}
+
+
+            {% if hospital.is_active %}
+                <span class="badge active">
+                    🟢 Active
+                </span>
+            {% else %}
+                <span class="badge inactive">
+                    🔴 Inactive
+                </span>
+            {% endif %}
+
+        </div>
+
+
+        <!-- HOSPITAL INFORMATION -->
+
+        <div class="section">
+
+            <h2>
+                Hospital Information
+            </h2>
+
+            <div class="info-grid">
+
+                <div class="info">
+                    <div class="label">Contact Number</div>
+                    <div class="value">
+                        {{ hospital.contact_number }}
+                    </div>
+                </div>
+
+                <div class="info">
+                    <div class="label">State</div>
+                    <div class="value">
+                        {{ hospital.state }}
+                    </div>
+                </div>
+
+                <div class="info">
+                    <div class="label">District</div>
+                    <div class="value">
+                        {{ hospital.district }}
+                    </div>
+                </div>
+
+                <div class="info">
+                    <div class="label">City</div>
+                    <div class="value">
+                        {{ hospital.city }}
+                    </div>
+                </div>
+
+                <div class="info" style="grid-column: 1 / -1;">
+                    <div class="label">Address</div>
+                    <div class="value">
+                        {{ hospital.address }}
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- BLOOD STOCK -->
+
+        <div class="section">
+
+            <h2>
+                🩸 Blood Stock
+            </h2>
+
+            <table class="blood-table">
+
+                <thead>
+
+                    <tr>
+                        <th>Blood Group</th>
+                        <th>Available Units</th>
+                        <th>Last Updated</th>
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    {% for stock in hospital.blood_stocks.all %}
+
+                    <tr>
+
+                        <td>
+                            <strong>{{ stock.blood_group }}</strong>
+                        </td>
+
+                        <td class="units">
+                            {{ stock.available_units }}
+                        </td>
+
+                        <td>
+                            {{ stock.last_updated|date:"d M Y, h:i A" }}
+                        </td>
+
+                    </tr>
+
+                    {% empty %}
+
+                    <tr>
+
+                        <td colspan="3">
+                            No blood stock information available.
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>

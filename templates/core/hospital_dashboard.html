@@ -1,0 +1,961 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Hospital Dashboard | BloodConnect</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f4f6f8;
+            color: #333;
+        }
+
+
+        /* ================= HEADER ================= */
+
+        .header {
+            background: linear-gradient(135deg, #8b0000, #c62828);
+            color: white;
+            padding: 18px 5%;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .brand-icon {
+            font-size: 32px;
+        }
+
+        .brand h1 {
+            font-size: 24px;
+        }
+
+        .logout {
+            background: white;
+            color: #b71c1c;
+
+            padding: 10px 18px;
+
+            border-radius: 8px;
+
+            text-decoration: none;
+            font-weight: bold;
+
+            transition: 0.2s;
+        }
+
+        .logout:hover {
+            background: #f5f5f5;
+            transform: translateY(-1px);
+        }
+
+
+        /* ================= CONTAINER ================= */
+
+        .container {
+            width: 92%;
+            max-width: 1150px;
+
+            margin: 30px auto 50px;
+        }
+
+
+        /* ================= MESSAGE ================= */
+
+        .message {
+            background: #e8f5e9;
+            color: #1b5e20;
+
+            border-left: 5px solid #2e7d32;
+
+            padding: 14px 18px;
+
+            border-radius: 8px;
+
+            margin-bottom: 20px;
+
+            font-weight: bold;
+        }
+
+
+        /* ================= WELCOME ================= */
+
+        .welcome {
+            background: white;
+
+            padding: 28px;
+
+            border-radius: 16px;
+
+            box-shadow: 0 6px 20px rgba(0,0,0,0.07);
+
+            margin-bottom: 25px;
+        }
+
+        .welcome-top {
+            display: flex;
+
+            justify-content: space-between;
+            align-items: center;
+
+            gap: 20px;
+
+            margin-bottom: 20px;
+        }
+
+        .welcome h2 {
+            color: #b71c1c;
+            font-size: 26px;
+        }
+
+        .verified {
+            background: #e8f5e9;
+            color: #2e7d32;
+
+            padding: 8px 14px;
+
+            border-radius: 20px;
+
+            font-size: 13px;
+            font-weight: bold;
+
+            white-space: nowrap;
+        }
+
+        .details-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(auto-fit, minmax(230px, 1fr));
+
+            gap: 15px;
+        }
+
+        .detail {
+            background: #fafafa;
+
+            padding: 14px;
+
+            border-radius: 10px;
+
+            border: 1px solid #eee;
+        }
+
+        .detail span {
+            display: block;
+
+            color: #888;
+
+            font-size: 12px;
+
+            margin-bottom: 5px;
+
+            text-transform: uppercase;
+        }
+
+        .detail strong {
+            color: #333;
+        }
+
+
+        /* ================= STATISTICS ================= */
+
+        .stats-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, 1fr);
+
+            gap: 18px;
+
+            margin-bottom: 32px;
+        }
+
+        .stat-card {
+            background: white;
+
+            padding: 22px;
+
+            border-radius: 15px;
+
+            box-shadow:
+                0 5px 18px rgba(0,0,0,0.07);
+
+            position: relative;
+
+            overflow: hidden;
+
+            transition: 0.25s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+
+            box-shadow:
+                0 10px 25px rgba(0,0,0,0.12);
+        }
+
+        .stat-icon {
+            font-size: 30px;
+
+            margin-bottom: 10px;
+        }
+
+        .stat-title {
+            color: #777;
+
+            font-size: 13px;
+
+            font-weight: bold;
+
+            text-transform: uppercase;
+
+            margin-bottom: 7px;
+        }
+
+        .stat-value {
+            font-size: 30px;
+
+            font-weight: bold;
+
+            color: #333;
+        }
+
+        .stat-subtitle {
+            margin-top: 5px;
+
+            color: #999;
+
+            font-size: 12px;
+        }
+
+        .stat-card.total {
+            border-left: 5px solid #c62828;
+        }
+
+        .stat-card.available {
+            border-left: 5px solid #2e7d32;
+        }
+
+        .stat-card.low {
+            border-left: 5px solid #f57c00;
+        }
+
+        .stat-card.empty {
+            border-left: 5px solid #d32f2f;
+        }
+
+
+        /* ================= SECTION ================= */
+
+        .section-title {
+            margin-bottom: 18px;
+
+            font-size: 23px;
+
+            color: #333;
+        }
+
+
+        /* ================= STOCK ================= */
+
+        .stock-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(auto-fit, minmax(190px, 1fr));
+
+            gap: 18px;
+        }
+
+        .stock-card {
+            background: white;
+
+            padding: 25px 18px;
+
+            border-radius: 15px;
+
+            text-align: center;
+
+            box-shadow:
+                0 5px 18px rgba(0,0,0,0.07);
+
+            border-top: 4px solid #c62828;
+
+            transition: 0.25s;
+        }
+
+        .stock-card:hover {
+            transform: translateY(-5px);
+
+            box-shadow:
+                0 10px 25px rgba(0,0,0,0.12);
+        }
+
+        .blood {
+            font-size: 32px;
+
+            font-weight: bold;
+
+            color: #c62828;
+        }
+
+        .units {
+            font-size: 20px;
+
+            font-weight: bold;
+
+            margin-top: 8px;
+        }
+
+        .status {
+            display: inline-block;
+
+            margin-top: 10px;
+
+            padding: 5px 10px;
+
+            border-radius: 20px;
+
+            font-size: 12px;
+
+            font-weight: bold;
+        }
+
+        .available {
+            background: #e8f5e9;
+            color: #2e7d32;
+        }
+
+        .empty {
+            background: #ffebee;
+            color: #c62828;
+        }
+
+        .updated {
+            margin-top: 9px;
+
+            font-size: 11px;
+
+            color: #999;
+        }
+
+
+        /* ================= UPDATE BOX ================= */
+
+        .update-box {
+            background: white;
+
+            padding: 28px;
+
+            border-radius: 16px;
+
+            margin-top: 35px;
+
+            box-shadow:
+                0 6px 20px rgba(0,0,0,0.07);
+        }
+
+        .update-box h2 {
+            color: #b71c1c;
+
+            margin-bottom: 22px;
+        }
+
+        .form-grid {
+            display: grid;
+
+            grid-template-columns: 1fr 1fr;
+
+            gap: 18px;
+        }
+
+        label {
+            display: block;
+
+            font-weight: bold;
+
+            margin-bottom: 7px;
+        }
+
+        select,
+        input {
+            width: 100%;
+
+            padding: 13px;
+
+            border: 1px solid #ccc;
+
+            border-radius: 8px;
+
+            font-size: 15px;
+
+            outline: none;
+        }
+
+        select:focus,
+        input:focus {
+            border-color: #c62828;
+        }
+
+        .update-btn {
+            grid-column: 1 / -1;
+
+            width: 100%;
+
+            padding: 14px;
+
+            border: none;
+
+            border-radius: 9px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #b71c1c,
+                    #d32f2f
+                );
+
+            color: white;
+
+            font-size: 16px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+
+            transition: 0.2s;
+        }
+
+        .update-btn:hover {
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 7px 18px rgba(183,28,28,0.25);
+        }
+
+
+        /* ================= FOOTER ================= */
+
+        .footer {
+            text-align: center;
+
+            color: #999;
+
+            font-size: 13px;
+
+            margin-top: 35px;
+        }
+
+
+        /* ================= MOBILE ================= */
+
+        @media (max-width: 900px) {
+
+            .stats-grid {
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+
+        }
+
+
+        @media (max-width: 650px) {
+
+            .header {
+                padding: 15px 4%;
+            }
+
+            .brand h1 {
+                font-size: 20px;
+            }
+
+            .welcome-top {
+                align-items: flex-start;
+
+                flex-direction: column;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .update-btn {
+                grid-column: auto;
+            }
+
+            .container {
+                width: 94%;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- ================= HEADER ================= -->
+
+<div class="header">
+
+    <div class="brand">
+
+        <div class="brand-icon">
+            🩸
+        </div>
+
+        <h1>
+            BloodConnect
+        </h1>
+
+    </div>
+
+
+    <a
+        href="{% url 'hospital_logout' %}"
+        class="logout">
+
+        Logout
+
+    </a>
+
+</div>
+
+
+<div class="container">
+
+
+    <!-- ================= MESSAGES ================= -->
+
+    {% if messages %}
+
+        {% for message in messages %}
+
+            <div class="message">
+
+                ✓ {{ message }}
+
+            </div>
+
+        {% endfor %}
+
+    {% endif %}
+
+
+    <!-- ================= HOSPITAL PROFILE ================= -->
+
+    <div class="welcome">
+
+        <div class="welcome-top">
+
+            <h2>
+                Welcome, {{ hospital.name }}
+            </h2>
+
+            <div class="verified">
+
+                ✓ Verified Hospital
+
+            </div>
+
+        </div>
+
+
+        <div class="details-grid">
+
+
+            <div class="detail">
+
+                <span>
+                    Hospital ID
+                </span>
+
+                <strong>
+                    {{ hospital.hospital_id }}
+                </strong>
+
+            </div>
+
+
+            <div class="detail">
+
+                <span>
+                    Location
+                </span>
+
+                <strong>
+                    {{ hospital.city }},
+                    {{ hospital.district }}
+                </strong>
+
+            </div>
+
+
+            <div class="detail">
+
+                <span>
+                    State
+                </span>
+
+                <strong>
+                    {{ hospital.state }}
+                </strong>
+
+            </div>
+
+
+            <div class="detail">
+
+                <span>
+                    Contact
+                </span>
+
+                <strong>
+                    {{ hospital.contact_number }}
+                </strong>
+
+            </div>
+
+
+            <div class="detail">
+
+                <span>
+                    Address
+                </span>
+
+                <strong>
+                    {{ hospital.address }}
+                </strong>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+    <!-- ================= DASHBOARD STATISTICS ================= -->
+
+    <div class="stats-grid">
+
+
+        <div class="stat-card total">
+
+            <div class="stat-icon">
+                🩸
+            </div>
+
+            <div class="stat-title">
+                Total Blood Units
+            </div>
+
+            <div class="stat-value">
+                {{ total_units }}
+            </div>
+
+            <div class="stat-subtitle">
+                Units currently available
+            </div>
+
+        </div>
+
+
+        <div class="stat-card available">
+
+            <div class="stat-icon">
+                ✅
+            </div>
+
+            <div class="stat-title">
+                Available Groups
+            </div>
+
+            <div class="stat-value">
+                {{ available_groups }}
+            </div>
+
+            <div class="stat-subtitle">
+                Blood groups in stock
+            </div>
+
+        </div>
+
+
+        <div class="stat-card low">
+
+            <div class="stat-icon">
+                ⚠️
+            </div>
+
+            <div class="stat-title">
+                Low Stock
+            </div>
+
+            <div class="stat-value">
+                {{ low_stock_groups }}
+            </div>
+
+            <div class="stat-subtitle">
+                Groups with 1–5 units
+            </div>
+
+        </div>
+
+
+        <div class="stat-card empty">
+
+            <div class="stat-icon">
+                ❌
+            </div>
+
+            <div class="stat-title">
+                Out of Stock
+            </div>
+
+            <div class="stat-value">
+                {{ out_of_stock_groups }}
+            </div>
+
+            <div class="stat-subtitle">
+                Groups with zero units
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+    <!-- ================= BLOOD STOCK ================= -->
+
+    <h2 class="section-title">
+
+        🩸 Blood Stock Availability
+
+    </h2>
+
+
+    <div class="stock-grid">
+
+
+        {% for stock in blood_stocks %}
+
+            <div class="stock-card">
+
+
+                <div class="blood">
+
+                    {{ stock.blood_group }}
+
+                </div>
+
+
+                <div class="units">
+
+                    {{ stock.available_units }} Units
+
+                </div>
+
+
+                {% if stock.available_units > 0 %}
+
+                    <div class="status available">
+
+                        ● Available
+
+                    </div>
+
+                {% else %}
+
+                    <div class="status empty">
+
+                        ● Out of Stock
+
+                    </div>
+
+                {% endif %}
+
+
+                <div class="updated">
+
+                    Updated:
+                    {{ stock.last_updated|date:"d M Y, h:i A" }}
+
+                </div>
+
+
+            </div>
+
+
+        {% empty %}
+
+
+            <div class="stock-card">
+
+                <div class="blood">
+                    🩸
+                </div>
+
+                <div class="units">
+                    No Stock Added
+                </div>
+
+            </div>
+
+
+        {% endfor %}
+
+
+    </div>
+
+
+    <!-- ================= UPDATE STOCK ================= -->
+
+    <div class="update-box">
+
+        <h2>
+            🔄 Update Blood Stock
+        </h2>
+
+
+        <form
+            method="POST"
+            action="{% url 'update_blood_stock' %}">
+
+            {% csrf_token %}
+
+
+            <div class="form-grid">
+
+
+                <div>
+
+                    <label>
+                        Blood Group
+                    </label>
+
+
+                    <select
+                        name="blood_group"
+                        required>
+
+                        <option value="">
+                            Select Blood Group
+                        </option>
+
+                        <option value="A+">
+                            A+
+                        </option>
+
+                        <option value="A-">
+                            A-
+                        </option>
+
+                        <option value="B+">
+                            B+
+                        </option>
+
+                        <option value="B-">
+                            B-
+                        </option>
+
+                        <option value="AB+">
+                            AB+
+                        </option>
+
+                        <option value="AB-">
+                            AB-
+                        </option>
+
+                        <option value="O+">
+                            O+
+                        </option>
+
+                        <option value="O-">
+                            O-
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div>
+
+                    <label>
+                        Available Units
+                    </label>
+
+
+                    <input
+                        type="number"
+                        name="available_units"
+                        min="0"
+                        placeholder="Enter number of units"
+                        required>
+
+                </div>
+
+
+                <button
+                    type="submit"
+                    class="update-btn">
+
+                    UPDATE BLOOD STOCK
+
+                </button>
+
+
+            </div>
+
+        </form>
+
+    </div>
+
+
+    <div class="footer">
+
+        © 2026 BloodConnect |
+        Hospital Management Portal
+
+    </div>
+
+
+</div>
+
+
+</body>
+
+</html>

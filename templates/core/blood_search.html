@@ -1,0 +1,1080 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Find Blood | BloodConnect</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f4f6f8;
+            color: #333;
+        }
+
+        /* HEADER */
+
+        .header {
+            background: linear-gradient(135deg, #8b0000, #c62828);
+            color: white;
+            padding: 18px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .brand-icon {
+            font-size: 32px;
+        }
+
+        .brand h1 {
+            font-size: 24px;
+        }
+
+        .home-btn {
+            background: white;
+            color: #b71c1c;
+            text-decoration: none;
+            padding: 10px 18px;
+            border-radius: 8px;
+            font-weight: bold;
+        }
+
+        .home-btn:hover {
+            background: #f5f5f5;
+        }
+
+        /* MAIN */
+
+        .container {
+            width: 92%;
+            max-width: 1100px;
+            margin: 35px auto 50px;
+        }
+
+        .hero {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .hero-icon {
+            font-size: 48px;
+        }
+
+        .hero h2 {
+            color: #b71c1c;
+            font-size: 30px;
+            margin: 8px 0;
+        }
+
+        .hero p {
+            color: #777;
+        }
+
+        /* SEARCH BOX */
+
+        .search-box {
+            background: white;
+            padding: 30px;
+            border-radius: 18px;
+            box-shadow: 0 7px 25px rgba(0,0,0,0.08);
+        }
+
+        /* LOCATION BUTTON */
+
+        .location-btn {
+            width: 100%;
+            padding: 14px;
+            border: 2px solid #c62828;
+            border-radius: 9px;
+            background: white;
+            color: #b71c1c;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-bottom: 22px;
+            transition: 0.3s;
+        }
+
+        .location-btn:hover {
+            background: #fff5f5;
+        }
+
+        .location-btn:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+
+        .location-status {
+            text-align: center;
+            margin-top: -12px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            min-height: 20px;
+            color: #666;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 18px;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 7px;
+            color: #444;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 13px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 15px;
+            outline: none;
+        }
+
+        input:focus,
+        select:focus {
+            border-color: #c62828;
+        }
+
+        .search-btn {
+            grid-column: 1 / -1;
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 9px;
+            background: linear-gradient(135deg, #b71c1c, #d32f2f);
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 5px;
+        }
+
+        .search-btn:hover {
+            background: linear-gradient(135deg, #8e0000, #b71c1c);
+        }
+
+        /* RESULTS */
+
+        .results {
+            margin-top: 35px;
+        }
+
+        .results-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 18px;
+        }
+
+        .results-header h2 {
+            color: #333;
+        }
+
+        .count {
+            background: #ffebee;
+            color: #b71c1c;
+            padding: 8px 13px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        /* HOSPITAL CARD */
+
+        .hospital-card {
+            background: white;
+            padding: 25px;
+            margin-bottom: 18px;
+            border-radius: 16px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.07);
+            border-left: 5px solid #c62828;
+        }
+
+        .hospital-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 18px;
+        }
+
+        .hospital-name {
+            color: #b71c1c;
+            font-size: 21px;
+        }
+
+        .available-badge {
+            background: #e8f5e9;
+            color: #2e7d32;
+            padding: 7px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            white-space: nowrap;
+        }
+
+        .info {
+            color: #555;
+            line-height: 1.9;
+        }
+
+        .blood-box {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+            margin-top: 18px;
+            padding: 16px;
+            background: #fff5f5;
+            border-radius: 10px;
+        }
+
+        .blood-group {
+            color: #c62828;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .units {
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+            margin-top: 5px;
+        }
+
+        .call-btn {
+            display: inline-block;
+            background: #2e7d32;
+            color: white;
+            text-decoration: none;
+            padding: 11px 18px;
+            border-radius: 8px;
+            font-weight: bold;
+        }
+
+        .call-btn:hover {
+            background: #1b5e20;
+        }
+
+        /* NO RESULT */
+
+        .no-result {
+            background: white;
+            padding: 35px;
+            text-align: center;
+            border-radius: 15px;
+            box-shadow: 0 5px 18px rgba(0,0,0,0.06);
+        }
+
+        .no-result-icon {
+            font-size: 45px;
+            margin-bottom: 10px;
+        }
+
+        .no-result h3 {
+            color: #555;
+            margin-bottom: 8px;
+        }
+
+        .no-result p {
+            color: #888;
+        }
+
+        .footer {
+            text-align: center;
+            color: #999;
+            font-size: 13px;
+            margin-top: 35px;
+        }
+
+        /* MOBILE */
+
+        @media (max-width: 650px) {
+
+            .header {
+                padding: 15px 4%;
+            }
+
+            .brand h1 {
+                font-size: 20px;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .search-btn {
+                grid-column: auto;
+            }
+
+            .hospital-top {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .blood-box {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .container {
+                width: 94%;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- HEADER -->
+
+<div class="header">
+
+    <div class="brand">
+
+        <div class="brand-icon">
+            🩸
+        </div>
+
+        <h1>
+            BloodConnect
+        </h1>
+
+    </div>
+
+
+    <a href="/" class="home-btn">
+        Home
+    </a>
+
+</div>
+
+
+<div class="container">
+
+
+    <!-- HERO -->
+
+    <div class="hero">
+
+        <div class="hero-icon">
+            🔎
+        </div>
+
+        <h2>
+            Find Available Blood
+        </h2>
+
+        <p>
+            Search verified hospitals for available blood near you.
+        </p>
+
+    </div>
+
+
+    <!-- SEARCH BOX -->
+
+    <div class="search-box">
+
+
+        <!-- CURRENT LOCATION BUTTON -->
+
+        <button
+            type="button"
+            class="location-btn"
+            id="locationBtn"
+            onclick="getCurrentLocation()">
+
+            📍 USE MY CURRENT LOCATION
+
+        </button>
+
+
+        <div
+            id="locationStatus"
+            class="location-status">
+
+        </div>
+        <div id="locationStatus"
+     style="margin-top:10px;
+            text-align:center;
+            font-size:14px;">
+</div>
+
+
+        <form method="GET"
+              action="{% url 'blood_search' %}">
+
+            <div class="form-grid">
+
+
+                <!-- STATE -->
+
+                <div>
+
+                    <label>
+                        State
+                    </label>
+
+                    <input
+                        type="text"
+                        id="state"
+                        name="state"
+                        placeholder="e.g. Uttar Pradesh"
+                        value="{{ selected_state|default:'' }}"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- DISTRICT -->
+
+                <div>
+
+                    <label>
+                        District
+                    </label>
+
+                    <input
+                        type="text"
+                        id="district"
+                        name="district"
+                        placeholder="e.g. Gorakhpur"
+                        value="{{ selected_district|default:'' }}"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- CITY -->
+
+                <div>
+
+                    <label>
+                        City
+                    </label>
+
+                    <input
+                        type="text"
+                        id="city"
+                        name="city"
+                        placeholder="e.g. Gorakhpur"
+                        value="{{ selected_city|default:'' }}"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- BLOOD GROUP -->
+
+                <div>
+
+                    <label>
+                        Blood Group
+                    </label>
+
+                    <select name="blood_group" required>
+
+                        <option value="">
+                            Select Blood Group
+                        </option>
+
+                        <option value="A+"
+                            {% if selected_blood == "A+" %}selected{% endif %}>
+                            A+
+                        </option>
+
+                        <option value="A-"
+                            {% if selected_blood == "A-" %}selected{% endif %}>
+                            A-
+                        </option>
+
+                        <option value="B+"
+                            {% if selected_blood == "B+" %}selected{% endif %}>
+                            B+
+                        </option>
+
+                        <option value="B-"
+                            {% if selected_blood == "B-" %}selected{% endif %}>
+                            B-
+                        </option>
+
+                        <option value="AB+"
+                            {% if selected_blood == "AB+" %}selected{% endif %}>
+                            AB+
+                        </option>
+
+                        <option value="AB-"
+                            {% if selected_blood == "AB-" %}selected{% endif %}>
+                            AB-
+                        </option>
+
+                        <option value="O+"
+                            {% if selected_blood == "O+" %}selected{% endif %}>
+                            O+
+                        </option>
+
+                        <option value="O-"
+                            {% if selected_blood == "O-" %}selected{% endif %}>
+                            O-
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- SEARCH BUTTON -->
+
+                <button
+                    type="submit"
+                    class="search-btn">
+
+                    🔎 SEARCH AVAILABLE BLOOD
+
+                </button>
+
+
+            </div>
+
+        </form>
+
+    </div>
+
+
+    <!-- RESULTS -->
+
+    {% if selected_blood %}
+
+        <div class="results">
+
+
+            <div class="results-header">
+
+                <h2>
+                    Available Hospitals
+                </h2>
+
+                <div class="count">
+
+                    {{ hospitals|length }}
+                    Hospital{{ hospitals|length|pluralize }}
+
+                </div>
+
+            </div>
+
+
+            {% if hospitals %}
+
+
+                {% for stock in hospitals %}
+
+
+                    <div class="hospital-card">
+
+
+                        <div class="hospital-top">
+
+                            <h3 class="hospital-name">
+
+                                🏥
+                                {{ stock.hospital.name }}
+
+                            </h3>
+
+
+                            <div class="available-badge">
+
+                                ✓ Blood Available
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="info">
+
+                            <strong>
+                                Hospital ID:
+                            </strong>
+
+                            {{ stock.hospital.hospital_id }}
+
+                            <br>
+
+
+                            <strong>
+                                📍 Location:
+                            </strong>
+
+                            {{ stock.hospital.city }},
+                            {{ stock.hospital.district }},
+                            {{ stock.hospital.state }}
+
+                            <br>
+
+
+                            <strong>
+                                📞 Contact:
+                            </strong>
+
+                            {{ stock.hospital.contact_number }}
+
+                        </div>
+
+
+                        <div class="blood-box">
+
+
+                            <div>
+
+                                <div class="blood-group">
+
+                                    {{ stock.blood_group }}
+
+                                </div>
+
+                                <div class="units">
+
+                                    {{ stock.available_units }}
+                                    Units Available
+
+                                </div>
+
+                            </div>
+
+
+                            <div>
+
+                                <a
+                                    href="tel:{{ stock.hospital.contact_number }}"
+                                    class="call-btn">
+
+                                    📞 Call Hospital
+
+                                </a>
+
+                            </div>
+
+
+                        </div>
+
+
+                    </div>
+
+
+                {% endfor %}
+
+
+            {% else %}
+
+
+                <div class="no-result">
+
+                    <div class="no-result-icon">
+                        🩸
+                    </div>
+
+                    <h3>
+                        No Blood Available
+                    </h3>
+
+                    <p>
+                        Sorry, no verified hospital has
+                        the requested blood available
+                        in this location.
+                    </p>
+
+                </div>
+
+
+            {% endif %}
+
+
+        </div>
+
+    {% endif %}
+
+
+    <!-- FOOTER -->
+
+    <div class="footer">
+
+        © 2026 BloodConnect |
+        Find Blood. Find Help. Save Lives.
+
+    </div>
+
+
+</div>
+
+
+<!-- CURRENT LOCATION SCRIPT -->
+
+
+<script>
+
+function getCurrentLocation() {
+
+    const button = document.getElementById("locationBtn");
+    const status = document.getElementById("locationStatus");
+
+    const stateInput = document.getElementById("state");
+    const districtInput = document.getElementById("district");
+    const cityInput = document.getElementById("city");
+
+
+    if (!navigator.geolocation) {
+
+        status.innerText =
+            "❌ Your browser does not support location services.";
+
+        status.style.color = "#c62828";
+
+        return;
+    }
+
+
+    /* Loading */
+
+    button.disabled = true;
+
+    button.innerText =
+        "📍 Finding Accurate Location...";
+
+    status.innerText =
+        "Please wait... getting your current location.";
+
+    status.style.color = "#b71c1c";
+
+
+    /*
+     * Get fresh location
+     *
+     * maximumAge: 0
+     * means don't use an old cached location.
+     *
+     * enableHighAccuracy: true
+     * requests the best available accuracy.
+     */
+
+    navigator.geolocation.getCurrentPosition(
+
+        function(position) {
+
+            const latitude =
+                position.coords.latitude;
+
+            const longitude =
+                position.coords.longitude;
+
+            const accuracy =
+                position.coords.accuracy;
+
+
+            console.log("Latitude:", latitude);
+            console.log("Longitude:", longitude);
+            console.log("Accuracy:", accuracy);
+
+
+            /*
+             * IMPORTANT:
+             *
+             * 10 km = 10000 meters
+             *
+             * If accuracy is worse than 10 km,
+             * DO NOT fill the location.
+             */
+
+            if (accuracy > 5000) {
+
+                status.innerText =
+                    "⚠️ Location accuracy is too low (" +
+                    Math.round(accuracy / 1000) +
+                    " km). Please use a mobile GPS or enter your location manually.";
+
+                status.style.color =
+                    "#e65100";
+
+
+                button.disabled = false;
+
+                button.innerText =
+                    "📍 USE MY CURRENT LOCATION";
+
+
+                return;
+            }
+
+
+            status.innerText =
+                "📍 Accurate location found. Finding city and district...";
+
+
+            /*
+             * Reverse Geocoding
+             */
+
+            const url =
+                "https://nominatim.openstreetmap.org/reverse" +
+                "?format=json" +
+                "&lat=" + latitude +
+                "&lon=" + longitude +
+                "&zoom=18" +
+                "&addressdetails=1";
+
+
+            fetch(url, {
+
+                headers: {
+
+                    "Accept":
+                        "application/json"
+
+                }
+
+            })
+
+            .then(function(response) {
+
+                if (!response.ok) {
+
+                    throw new Error(
+                        "Location service failed."
+                    );
+
+                }
+
+                return response.json();
+
+            })
+
+
+            .then(function(data) {
+
+                console.log(
+                    "Location API response:",
+                    data
+                );
+
+
+                const address =
+                    data.address || {};
+
+
+                /*
+                 * STATE
+                 */
+
+                const state =
+                    address.state || "";
+
+
+                /*
+                 * DISTRICT
+                 */
+
+                const district =
+                    address.state_district ||
+                    address.district ||
+                    address.county ||
+                    "";
+
+
+                /*
+                 * CITY
+                 */
+
+                const city =
+                    address.city ||
+                    address.town ||
+                    address.village ||
+                    address.municipality ||
+                    address.city_district ||
+                    "";
+
+
+                /*
+                 * If location information
+                 * is incomplete
+                 */
+
+                if (!state || !district || !city) {
+
+                    status.innerText =
+                        "⚠️ Location found, but complete city/district information could not be identified. Please enter it manually.";
+
+                    status.style.color =
+                        "#e65100";
+
+
+                    button.disabled = false;
+
+                    button.innerText =
+                        "📍 USE MY CURRENT LOCATION";
+
+
+                    return;
+                }
+
+
+                /*
+                 * Fill fields
+                 */
+
+                stateInput.value =
+                    state;
+
+                districtInput.value =
+                    district;
+
+                cityInput.value =
+                    city;
+
+
+                /*
+                 * SUCCESS
+                 */
+
+                status.innerText =
+                    "✅ Location detected: " +
+                    city +
+                    ", " +
+                    district +
+                    ", " +
+                    state;
+
+
+                status.style.color =
+                    "#2e7d32";
+
+
+                button.disabled = false;
+
+                button.innerText =
+                    "📍 USE MY CURRENT LOCATION";
+
+            })
+
+
+            .catch(function(error) {
+
+                console.error(
+                    "Location error:",
+                    error
+                );
+
+
+                status.innerText =
+                    "❌ Unable to identify your location. Please enter it manually.";
+
+                status.style.color =
+                    "#c62828";
+
+
+                button.disabled = false;
+
+                button.innerText =
+                    "📍 USE MY CURRENT LOCATION";
+
+            });
+
+        },
+
+
+        function(error) {
+
+            button.disabled = false;
+
+            button.innerText =
+                "📍 USE MY CURRENT LOCATION";
+
+
+            if (error.code === 1) {
+
+                status.innerText =
+                    "❌ Location permission denied. Please allow location access.";
+
+            }
+
+            else if (error.code === 2) {
+
+                status.innerText =
+                    "❌ Location unavailable. Please check your device location settings.";
+
+            }
+
+            else if (error.code === 3) {
+
+                status.innerText =
+                    "❌ Location request timed out. Please try again.";
+
+            }
+
+            else {
+
+                status.innerText =
+                    "❌ Unable to get your current location.";
+
+            }
+
+
+            status.style.color =
+                "#c62828";
+
+        },
+
+
+        {
+            enableHighAccuracy: true,
+
+            timeout: 30000,
+
+            maximumAge: 0
+        }
+
+    );
+
+}
+
+</script>
+
+</body>
+
+</html>

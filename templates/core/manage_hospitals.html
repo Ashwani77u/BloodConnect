@@ -1,0 +1,1067 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Manage Hospitals | BloodConnect</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f4f6f8;
+            color: #333;
+        }
+
+        /* =========================
+           HEADER
+        ========================= */
+
+        .header {
+            background: linear-gradient(
+                135deg,
+                #8b0000,
+                #c62828
+            );
+
+            color: white;
+
+            padding: 18px 5%;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            box-shadow:
+                0 4px 15px rgba(0,0,0,0.15);
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .brand-icon {
+            font-size: 30px;
+        }
+
+        .brand h1 {
+            font-size: 24px;
+        }
+
+        .admin-badge {
+            background: rgba(255,255,255,0.15);
+
+            padding: 9px 15px;
+
+            border-radius: 20px;
+
+            font-size: 13px;
+
+            font-weight: bold;
+        }
+
+
+        /* =========================
+           CONTAINER
+        ========================= */
+
+        .container {
+            width: 92%;
+            max-width: 1250px;
+
+            margin: 35px auto 50px;
+        }
+
+
+        /* =========================
+           TOP
+        ========================= */
+
+        .top-section {
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            gap: 15px;
+
+            margin-bottom: 25px;
+        }
+
+        .top-section h2 {
+            color: #b71c1c;
+
+            font-size: 28px;
+
+            margin-bottom: 6px;
+        }
+
+        .top-section p {
+            color: #777;
+
+            font-size: 14px;
+        }
+
+        .back-btn {
+            text-decoration: none;
+
+            background: white;
+
+            color: #b71c1c;
+
+            border: 1px solid #ddd;
+
+            padding: 11px 16px;
+
+            border-radius: 8px;
+
+            font-weight: bold;
+        }
+
+        .back-btn:hover {
+            background: #ffebee;
+        }
+
+
+        /* =========================
+           MESSAGES
+        ========================= */
+
+        .message {
+            padding: 12px;
+
+            border-radius: 8px;
+
+            margin-bottom: 18px;
+
+            text-align: center;
+
+            background: #ffebee;
+
+            color: #b71c1c;
+        }
+
+
+        /* =========================
+           FILTER BOX
+        ========================= */
+
+        .filter-box {
+            background: white;
+
+            padding: 20px;
+
+            border-radius: 14px;
+
+            box-shadow:
+                0 5px 18px rgba(0,0,0,0.06);
+
+            margin-bottom: 25px;
+        }
+
+        .search-form {
+            display: grid;
+
+            grid-template-columns:
+                1fr 200px auto auto;
+
+            gap: 12px;
+        }
+
+        .search-form input,
+        .search-form select {
+
+            width: 100%;
+
+            padding: 12px;
+
+            border: 1px solid #ccc;
+
+            border-radius: 8px;
+
+            font-size: 14px;
+
+            outline: none;
+        }
+
+        .search-form input:focus,
+        .search-form select:focus {
+            border-color: #c62828;
+        }
+
+        .search-btn {
+            border: none;
+
+            background: #c62828;
+
+            color: white;
+
+            padding: 12px 20px;
+
+            border-radius: 8px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+        }
+
+        .search-btn:hover {
+            background: #8e0000;
+        }
+
+        .clear-btn {
+            text-decoration: none;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            padding: 12px 18px;
+
+            border-radius: 8px;
+
+            background: #eee;
+
+            color: #555;
+
+            font-weight: bold;
+        }
+
+
+        /* =========================
+           HOSPITAL COUNT
+        ========================= */
+
+        .result-info {
+            margin-bottom: 15px;
+
+            color: #666;
+
+            font-size: 14px;
+        }
+
+        .result-info strong {
+            color: #b71c1c;
+        }
+
+
+        /* =========================
+           HOSPITAL CARDS
+        ========================= */
+
+        .hospital-list {
+            display: grid;
+
+            gap: 18px;
+        }
+
+        .hospital-card {
+            background: white;
+
+            border-radius: 14px;
+
+            padding: 22px;
+
+            box-shadow:
+                0 5px 18px rgba(0,0,0,0.06);
+
+            border-left: 5px solid #c62828;
+        }
+
+        .hospital-header {
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: flex-start;
+
+            gap: 15px;
+
+            margin-bottom: 15px;
+        }
+
+        .hospital-name {
+            color: #b71c1c;
+
+            font-size: 20px;
+
+            margin-bottom: 5px;
+        }
+
+        .hospital-id {
+            color: #888;
+
+            font-size: 13px;
+        }
+
+
+        /* =========================
+           STATUS
+        ========================= */
+
+        .status-container {
+            display: flex;
+
+            gap: 7px;
+
+            flex-wrap: wrap;
+
+            justify-content: flex-end;
+        }
+
+        .status {
+            padding: 6px 10px;
+
+            border-radius: 20px;
+
+            font-size: 12px;
+
+            font-weight: bold;
+        }
+
+        .verified {
+            background: #e8f5e9;
+
+            color: #2e7d32;
+        }
+
+        .pending {
+            background: #fff3e0;
+
+            color: #ef6c00;
+        }
+
+        .active {
+            background: #e8f5e9;
+
+            color: #2e7d32;
+        }
+
+        .inactive {
+            background: #ffebee;
+
+            color: #c62828;
+        }
+
+
+        /* =========================
+           DETAILS
+        ========================= */
+
+        .details-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, 1fr);
+
+            gap: 12px;
+
+            margin-bottom: 18px;
+        }
+
+        .detail {
+            background: #f8f9fa;
+
+            padding: 12px;
+
+            border-radius: 8px;
+        }
+
+        .detail-label {
+            color: #888;
+
+            font-size: 11px;
+
+            margin-bottom: 5px;
+
+            text-transform: uppercase;
+        }
+
+        .detail-value {
+            color: #333;
+
+            font-size: 14px;
+
+            font-weight: bold;
+
+            word-break: break-word;
+        }
+
+
+        /* =========================
+           ACTIONS
+        ========================= */
+
+        .actions {
+            display: flex;
+
+            gap: 10px;
+
+            flex-wrap: wrap;
+
+            padding-top: 15px;
+
+            border-top: 1px solid #eee;
+        }
+
+        .btn {
+            display: inline-block;
+
+            padding: 10px 15px;
+
+            border-radius: 8px;
+
+            border: none;
+
+            text-decoration: none;
+
+            font-size: 13px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+        }
+
+        .view-btn {
+            background: #1976d2;
+
+            color: white;
+        }
+
+        .activate-btn {
+            background: #2e7d32;
+
+            color: white;
+        }
+
+        .deactivate-btn {
+            background: #c62828;
+
+            color: white;
+        }
+
+        .approve-btn {
+            background: #ef6c00;
+
+            color: white;
+        }
+
+        .btn:hover {
+            opacity: 0.88;
+        }
+
+        .action-form {
+            display: inline;
+        }
+
+
+        /* =========================
+           EMPTY STATE
+        ========================= */
+
+        .empty {
+            background: white;
+
+            padding: 50px 20px;
+
+            text-align: center;
+
+            border-radius: 14px;
+
+            box-shadow:
+                0 5px 18px rgba(0,0,0,0.06);
+        }
+
+        .empty-icon {
+            font-size: 50px;
+
+            margin-bottom: 12px;
+        }
+
+        .empty h3 {
+            color: #555;
+
+            margin-bottom: 7px;
+        }
+
+        .empty p {
+            color: #888;
+
+            font-size: 14px;
+        }
+
+
+        /* =========================
+           FOOTER
+        ========================= */
+
+        .footer {
+            text-align: center;
+
+            color: #999;
+
+            font-size: 13px;
+
+            margin-top: 40px;
+        }
+
+
+        /* =========================
+           MOBILE
+        ========================= */
+
+        @media (max-width: 850px) {
+
+            .search-form {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .details-grid {
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+
+        }
+
+
+        @media (max-width: 600px) {
+
+            .header {
+                padding: 15px 4%;
+            }
+
+            .brand h1 {
+                font-size: 20px;
+            }
+
+            .admin-badge {
+                font-size: 10px;
+
+                padding: 7px 9px;
+            }
+
+            .container {
+                width: 94%;
+
+                margin-top: 25px;
+            }
+
+            .top-section {
+                align-items: flex-start;
+
+                flex-direction: column;
+            }
+
+            .top-section h2 {
+                font-size: 24px;
+            }
+
+            .search-form {
+                grid-template-columns: 1fr;
+            }
+
+            .details-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hospital-header {
+                flex-direction: column;
+            }
+
+            .status-container {
+                justify-content: flex-start;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================
+     HEADER
+========================= -->
+
+<div class="header">
+
+    <div class="brand">
+
+        <div class="brand-icon">
+            🩸
+        </div>
+
+        <h1>
+            BloodConnect
+        </h1>
+
+    </div>
+
+    <div class="admin-badge">
+        🔐 ADMIN PANEL
+    </div>
+
+</div>
+
+
+<div class="container">
+
+
+    <!-- =========================
+         TOP
+    ========================= -->
+
+    <div class="top-section">
+
+        <div>
+
+            <h2>
+                Manage Hospitals
+            </h2>
+
+            <p>
+                View, verify and manage all registered hospitals.
+            </p>
+
+        </div>
+
+
+        <a
+            href="{% url 'admin_dashboard' %}"
+            class="back-btn">
+
+            ← Admin Dashboard
+
+        </a>
+
+    </div>
+
+
+    <!-- =========================
+         MESSAGES
+    ========================= -->
+
+    {% if messages %}
+
+        {% for message in messages %}
+
+            <div class="message">
+
+                {{ message }}
+
+            </div>
+
+        {% endfor %}
+
+    {% endif %}
+
+
+    <!-- =========================
+         FILTER
+    ========================= -->
+
+    <div class="filter-box">
+
+        <form
+            method="GET"
+            class="search-form">
+
+            <input
+                type="text"
+                name="search"
+                value="{{ search }}"
+                placeholder="🔎 Search hospital, ID or city">
+
+
+            <select name="status">
+
+                <option value="">
+                    All Hospitals
+                </option>
+
+                <option
+                    value="pending"
+                    {% if status == 'pending' %}
+                        selected
+                    {% endif %}>
+
+                    ⏳ Pending
+
+                </option>
+
+                <option
+                    value="verified"
+                    {% if status == 'verified' %}
+                        selected
+                    {% endif %}>
+
+                    ✅ Verified
+
+                </option>
+
+                <option
+                    value="active"
+                    {% if status == 'active' %}
+                        selected
+                    {% endif %}>
+
+                    🟢 Active
+
+                </option>
+
+                <option
+                    value="inactive"
+                    {% if status == 'inactive' %}
+                        selected
+                    {% endif %}>
+
+                    🔴 Inactive
+
+                </option>
+
+            </select>
+
+
+            <button
+                type="submit"
+                class="search-btn">
+
+                Search
+
+            </button>
+
+
+            <a
+                href="{% url 'manage_hospitals' %}"
+                class="clear-btn">
+
+                Clear
+
+            </a>
+
+        </form>
+
+    </div>
+
+
+    <!-- =========================
+         RESULT COUNT
+    ========================= -->
+
+    <div class="result-info">
+
+        Showing
+        <strong>{{ hospitals|length }}</strong>
+        hospital(s)
+
+    </div>
+
+
+    <!-- =========================
+         HOSPITAL LIST
+    ========================= -->
+
+    {% if hospitals %}
+
+        <div class="hospital-list">
+
+
+            {% for hospital in hospitals %}
+
+
+                <div class="hospital-card">
+
+
+                    <!-- HEADER -->
+
+                    <div class="hospital-header">
+
+
+                        <div>
+
+                            <h3 class="hospital-name">
+
+                                🏥 {{ hospital.name }}
+
+                            </h3>
+
+                            <div class="hospital-id">
+
+                                Hospital ID:
+                                <strong>
+                                    {{ hospital.hospital_id }}
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="status-container">
+
+
+                            {% if hospital.is_verified %}
+
+                                <span
+                                    class="status verified">
+
+                                    ✅ Verified
+
+                                </span>
+
+                            {% else %}
+
+                                <span
+                                    class="status pending">
+
+                                    ⏳ Pending
+
+                                </span>
+
+                            {% endif %}
+
+
+                            {% if hospital.is_active %}
+
+                                <span
+                                    class="status active">
+
+                                    🟢 Active
+
+                                </span>
+
+                            {% else %}
+
+                                <span
+                                    class="status inactive">
+
+                                    🔴 Inactive
+
+                                </span>
+
+                            {% endif %}
+
+
+                        </div>
+
+
+                    </div>
+
+
+                    <!-- DETAILS -->
+
+                    <div class="details-grid">
+
+
+                        <div class="detail">
+
+                            <div class="detail-label">
+                                Location
+                            </div>
+
+                            <div class="detail-value">
+
+                                {{ hospital.city }},
+                                {{ hospital.district }}
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="detail">
+
+                            <div class="detail-label">
+                                State
+                            </div>
+
+                            <div class="detail-value">
+
+                                {{ hospital.state }}
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="detail">
+
+                            <div class="detail-label">
+                                Contact
+                            </div>
+
+                            <div class="detail-value">
+
+                                {{ hospital.contact_number }}
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="detail">
+
+                            <div class="detail-label">
+                                Registered
+                            </div>
+
+                            <div class="detail-value">
+
+                                {{ hospital.created_at|date:"d M Y" }}
+
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+
+                    <!-- ACTIONS -->
+
+                    <div class="actions">
+
+
+                        <a
+                            href="{% url 'hospital_detail' hospital.id %}"
+                            class="btn view-btn">
+
+                            👁️ View Details
+
+                        </a>
+
+
+                        {% if not hospital.is_verified %}
+
+
+                            <form
+                                method="POST"
+                                action="{% url 'approve_hospital' hospital.id %}"
+                                class="action-form">
+
+                                {% csrf_token %}
+
+                                <button
+                                    type="submit"
+                                    class="btn approve-btn">
+
+                                    ✅ Approve Hospital
+
+                                </button>
+
+                            </form>
+
+
+                        {% else %}
+
+
+                            <form
+                                method="POST"
+                                action="{% url 'toggle_hospital_status' hospital.id %}"
+                                class="action-form">
+
+                                {% csrf_token %}
+
+
+                                {% if hospital.is_active %}
+
+                                    <button
+                                        type="submit"
+                                        class="btn deactivate-btn">
+
+                                        🔴 Deactivate
+
+                                    </button>
+
+                                {% else %}
+
+                                    <button
+                                        type="submit"
+                                        class="btn activate-btn">
+
+                                        🟢 Activate
+
+                                    </button>
+
+                                {% endif %}
+
+
+                            </form>
+
+
+                        {% endif %}
+
+
+                    </div>
+
+
+                </div>
+
+
+            {% endfor %}
+
+
+        </div>
+
+
+    {% else %}
+
+
+        <div class="empty">
+
+            <div class="empty-icon">
+                🏥
+            </div>
+
+            <h3>
+                No hospitals found
+            </h3>
+
+            <p>
+                Try changing your search or filter.
+            </p>
+
+        </div>
+
+
+    {% endif %}
+
+
+    <!-- =========================
+         FOOTER
+    ========================= -->
+
+    <div class="footer">
+
+        © 2026 BloodConnect |
+        Hospital Management System
+
+    </div>
+
+
+</div>
+
+
+</body>
+
+</html>

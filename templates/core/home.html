@@ -1,0 +1,661 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>BloodConnect | Find Blood, Save Lives</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: #f7f7f7;
+            color: #333;
+        }
+
+
+        /* ================= HEADER ================= */
+
+        .navbar {
+            background: #b71c1c;
+            color: white;
+            padding: 18px 6%;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .brand {
+            font-size: 25px;
+            font-weight: bold;
+        }
+
+        .nav-text {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+
+        /* ================= HERO ================= */
+
+        .hero {
+            background:
+                linear-gradient(
+                    135deg,
+                    #8b0000,
+                    #d32f2f
+                );
+
+            color: white;
+            padding: 75px 6% 85px;
+            text-align: center;
+        }
+
+        .hero-icon {
+            font-size: 65px;
+            margin-bottom: 15px;
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            margin-bottom: 15px;
+        }
+
+        .hero p {
+            font-size: 20px;
+            opacity: 0.95;
+            max-width: 650px;
+            margin: auto;
+            line-height: 1.6;
+        }
+
+
+        /* ================= ACTION CARDS ================= */
+
+        .actions {
+            width: 90%;
+            max-width: 1150px;
+            margin: -45px auto 50px;
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(auto-fit, minmax(280px, 1fr));
+
+            gap: 25px;
+        }
+
+        .card {
+            background: white;
+            padding: 35px 28px;
+            border-radius: 15px;
+            text-align: center;
+
+            box-shadow:
+                0 8px 25px rgba(0,0,0,0.12);
+
+            transition: 0.3s;
+
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .card:hover {
+            transform: translateY(-7px);
+        }
+
+        .card-icon {
+            font-size: 50px;
+            margin-bottom: 15px;
+        }
+
+        .card h2 {
+            color: #b71c1c;
+            margin-bottom: 12px;
+        }
+
+        .card p {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 25px;
+        }
+
+        .btn {
+            display: inline-block;
+
+            padding: 13px 28px;
+
+            background: #c62828;
+            color: white;
+
+            text-decoration: none;
+
+            border-radius: 8px;
+
+            font-weight: bold;
+
+            transition: 0.2s;
+        }
+
+        .btn:hover {
+            background: #8e0000;
+        }
+
+        .register-btn {
+            background: #7b1fa2;
+        }
+
+        .register-btn:hover {
+            background: #4a148c;
+        }
+
+
+        /* ================= HOW IT WORKS ================= */
+
+        .section {
+            width: 90%;
+            max-width: 1100px;
+            margin: 0 auto 55px;
+            text-align: center;
+        }
+
+        .section h2 {
+            color: #b71c1c;
+            font-size: 30px;
+            margin-bottom: 30px;
+        }
+
+        .steps {
+            display: grid;
+
+            grid-template-columns:
+                repeat(auto-fit, minmax(200px, 1fr));
+
+            gap: 20px;
+        }
+
+        .step {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+
+            box-shadow:
+                0 4px 15px rgba(0,0,0,0.08);
+        }
+
+        .step-number {
+            width: 45px;
+            height: 45px;
+
+            margin: 0 auto 15px;
+
+            border-radius: 50%;
+
+            background: #c62828;
+            color: white;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .step h3 {
+            margin-bottom: 8px;
+        }
+
+        .step p {
+            color: #666;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+
+        /* ================= FEATURES ================= */
+
+        .features {
+            width: 90%;
+            max-width: 1000px;
+            margin: 0 auto 60px;
+        }
+
+        .features h2 {
+            text-align: center;
+            color: #b71c1c;
+            margin-bottom: 25px;
+            font-size: 30px;
+        }
+
+        .feature-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(auto-fit, minmax(220px, 1fr));
+
+            gap: 18px;
+        }
+
+        .feature {
+            background: white;
+            padding: 22px;
+            border-radius: 10px;
+
+            border-left: 5px solid #c62828;
+
+            box-shadow:
+                0 3px 12px rgba(0,0,0,0.06);
+        }
+
+        .feature h3 {
+            margin-bottom: 8px;
+        }
+
+        .feature p {
+            color: #666;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+
+        /* ================= FOOTER ================= */
+
+        footer {
+            background: #222;
+            color: #ddd;
+
+            text-align: center;
+
+            padding: 25px;
+
+            font-size: 14px;
+        }
+
+        footer strong {
+            color: white;
+        }
+
+
+        /* ================= MOBILE ================= */
+
+        @media (max-width: 600px) {
+
+            .navbar {
+                padding: 15px 5%;
+            }
+
+            .nav-text {
+                display: none;
+            }
+
+            .hero {
+                padding: 55px 5% 70px;
+            }
+
+            .hero h1 {
+                font-size: 36px;
+            }
+
+            .hero p {
+                font-size: 17px;
+            }
+
+            .actions {
+                margin-top: -35px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- ================= NAVBAR ================= -->
+
+<nav class="navbar">
+
+    <div class="brand">
+        🩸 BloodConnect
+    </div>
+
+    <div class="nav-text">
+        Connecting Blood Donors, Patients & Hospitals
+    </div>
+
+</nav>
+
+
+<!-- ================= HERO ================= -->
+
+<section class="hero">
+
+    <div class="hero-icon">
+        🩸
+    </div>
+
+    <h1>
+        Find Blood. Save Lives.
+    </h1>
+
+    <p>
+        BloodConnect helps patients find verified hospitals
+        with available blood based on their location and
+        required blood group.
+    </p>
+
+</section>
+
+
+<!-- ================= MAIN ACTIONS ================= -->
+
+<section class="actions">
+
+
+    <!-- HOSPITAL -->
+
+    <div class="card">
+
+        <div>
+
+            <div class="card-icon">
+                🏥
+            </div>
+
+            <h2>
+                Hospital Portal
+            </h2>
+
+            <p>
+                Registered hospitals can securely manage
+                their blood stock and keep availability
+                information updated.
+            </p>
+
+        </div>
+
+        <a
+            href="/hospital/login/"
+            class="btn">
+
+            Hospital Login
+
+        </a>
+
+    </div>
+
+
+    <!-- USER -->
+
+    <div class="card">
+
+        <div>
+
+            <div class="card-icon">
+                👤
+            </div>
+
+            <h2>
+                Find Blood
+            </h2>
+
+            <p>
+                Search for available blood in verified
+                hospitals according to your state,
+                district, city and blood group.
+            </p>
+
+        </div>
+
+        <a
+            href="/search/"
+            class="btn">
+
+            Search Blood
+
+        </a>
+
+    </div>
+
+
+    <!-- HOSPITAL REGISTRATION -->
+
+    <div class="card">
+
+        <div>
+
+            <div class="card-icon">
+                🏥
+            </div>
+
+            <h2>
+                Register Hospital
+            </h2>
+
+            <p>
+                Hospitals can register with BloodConnect
+                and help patients find available blood
+                through our platform.
+            </p>
+
+        </div>
+
+        <a
+            href="/hospital/register/"
+            class="btn register-btn">
+
+            Register Hospital
+
+        </a>
+
+    </div>
+
+
+</section>
+
+
+<!-- ================= HOW IT WORKS ================= -->
+
+<section class="section">
+
+    <h2>
+        How BloodConnect Works
+    </h2>
+
+
+    <div class="steps">
+
+
+        <div class="step">
+
+            <div class="step-number">
+                1
+            </div>
+
+            <h3>
+                Enter Location
+            </h3>
+
+            <p>
+                Enter your state, district and city
+                to find nearby hospitals.
+            </p>
+
+        </div>
+
+
+        <div class="step">
+
+            <div class="step-number">
+                2
+            </div>
+
+            <h3>
+                Select Blood Group
+            </h3>
+
+            <p>
+                Select the blood group that you
+                currently need.
+            </p>
+
+        </div>
+
+
+        <div class="step">
+
+            <div class="step-number">
+                3
+            </div>
+
+            <h3>
+                Find Hospital
+            </h3>
+
+            <p>
+                View verified hospitals that currently
+                have the required blood available.
+            </p>
+
+        </div>
+
+
+        <div class="step">
+
+            <div class="step-number">
+                4
+            </div>
+
+            <h3>
+                Contact Hospital
+            </h3>
+
+            <p>
+                Use the hospital contact information
+                to confirm availability.
+            </p>
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+<!-- ================= FEATURES ================= -->
+
+<section class="features">
+
+    <h2>
+        Why BloodConnect?
+    </h2>
+
+
+    <div class="feature-grid">
+
+
+        <div class="feature">
+
+            <h3>
+                🏥 Verified Hospitals
+            </h3>
+
+            <p>
+                Only verified and active hospitals
+                are shown in public blood searches.
+            </p>
+
+        </div>
+
+
+        <div class="feature">
+
+            <h3>
+                🩸 Live Blood Availability
+            </h3>
+
+            <p>
+                Hospitals can update their available
+                blood units through their dashboard.
+            </p>
+
+        </div>
+
+
+        <div class="feature">
+
+            <h3>
+                📍 Location Based Search
+            </h3>
+
+            <p>
+                Find available blood according to
+                state, district and city.
+            </p>
+
+        </div>
+
+
+        <div class="feature">
+
+            <h3>
+                🔐 Secure Hospital Access
+            </h3>
+
+            <p>
+                Hospital stock management is protected
+                through authenticated login.
+            </p>
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+<!-- ================= FOOTER ================= -->
+
+<footer>
+
+    <strong>BloodConnect</strong>
+
+    <br><br>
+
+    BCA Final Year Mini Project
+
+    <br>
+
+    Find Blood. Find Help. Save Lives.
+
+    <br><br>
+
+    © 2026 BloodConnect
+
+</footer>
+
+
+</body>
+
+</html>

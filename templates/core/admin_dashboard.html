@@ -1,0 +1,596 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Admin Dashboard | BloodConnect</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f4f6f8;
+            color: #333;
+        }
+
+        /* =========================
+           HEADER
+        ========================= */
+
+        .header {
+            background: linear-gradient(
+                135deg,
+                #8b0000,
+                #c62828
+            );
+
+            color: white;
+            padding: 18px 5%;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            box-shadow:
+                0 4px 15px rgba(0,0,0,0.15);
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .brand-icon {
+            font-size: 32px;
+        }
+
+        .brand h1 {
+            font-size: 24px;
+        }
+
+        .admin-badge {
+            background: rgba(255,255,255,0.15);
+            padding: 9px 15px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+
+        /* =========================
+           CONTAINER
+        ========================= */
+
+        .container {
+            width: 92%;
+            max-width: 1200px;
+            margin: 35px auto 50px;
+        }
+
+
+        /* =========================
+           HERO
+        ========================= */
+
+        .hero {
+            margin-bottom: 30px;
+        }
+
+        .hero h2 {
+            color: #b71c1c;
+            font-size: 30px;
+            margin-bottom: 8px;
+        }
+
+        .hero p {
+            color: #777;
+            font-size: 15px;
+        }
+
+
+        /* =========================
+           STAT GRID
+        ========================= */
+
+        .stats-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(
+                    auto-fit,
+                    minmax(220px, 1fr)
+                );
+
+            gap: 20px;
+        }
+
+
+        /* =========================
+           STAT CARD
+        ========================= */
+
+        .stat-card {
+            background: white;
+
+            padding: 25px;
+
+            border-radius: 16px;
+
+            box-shadow:
+                0 6px 20px rgba(0,0,0,0.07);
+
+            border-left: 5px solid #c62828;
+
+            transition: 0.25s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+
+            box-shadow:
+                0 10px 25px rgba(0,0,0,0.12);
+        }
+
+        .stat-icon {
+            font-size: 34px;
+            margin-bottom: 12px;
+        }
+
+        .stat-title {
+            color: #777;
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+
+        .stat-value {
+            color: #333;
+            font-size: 32px;
+            font-weight: bold;
+        }
+
+
+        /* =========================
+           SECTION
+        ========================= */
+
+        .section {
+            margin-top: 35px;
+        }
+
+        .section-title {
+            color: #333;
+            font-size: 22px;
+            margin-bottom: 18px;
+        }
+
+
+        /* =========================
+           QUICK ACTIONS
+        ========================= */
+
+        .actions {
+            display: grid;
+
+            grid-template-columns:
+                repeat(
+                    auto-fit,
+                    minmax(220px, 1fr)
+                );
+
+            gap: 18px;
+        }
+
+        .action {
+            background: white;
+
+            padding: 22px;
+
+            border-radius: 14px;
+
+            text-decoration: none;
+
+            color: #333;
+
+            box-shadow:
+                0 5px 18px rgba(0,0,0,0.06);
+
+            transition: 0.25s;
+
+            border: 1px solid #eee;
+        }
+
+        .action:hover {
+            transform: translateY(-4px);
+
+            border-color: #c62828;
+        }
+
+        .action-icon {
+            font-size: 30px;
+            margin-bottom: 10px;
+        }
+
+        .action h3 {
+            color: #b71c1c;
+            margin-bottom: 6px;
+        }
+
+        .action p {
+            color: #777;
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+
+        /* =========================
+           FOOTER
+        ========================= */
+
+        .footer {
+            text-align: center;
+
+            color: #999;
+
+            font-size: 13px;
+
+            margin-top: 45px;
+        }
+
+
+        /* =========================
+           MOBILE
+        ========================= */
+
+        @media (max-width: 650px) {
+
+            .header {
+                padding: 15px 4%;
+            }
+
+            .brand h1 {
+                font-size: 20px;
+            }
+
+            .admin-badge {
+                font-size: 11px;
+                padding: 7px 10px;
+            }
+
+            .container {
+                width: 94%;
+            }
+
+            .hero h2 {
+                font-size: 25px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================
+     HEADER
+========================= -->
+
+<div class="header">
+
+    <div class="brand">
+
+        <div class="brand-icon">
+            🩸
+        </div>
+
+        <h1>
+            BloodConnect
+        </h1>
+
+    </div>
+
+
+    <div class="admin-badge">
+
+        🔐 ADMIN PANEL
+
+    </div>
+
+</div>
+
+
+<div class="container">
+
+
+    <!-- =========================
+         HERO
+    ========================= -->
+
+    <div class="hero">
+
+        <h2>
+            Admin Dashboard
+        </h2>
+
+        <p>
+            Monitor hospitals, blood availability
+            and verification status.
+        </p>
+
+    </div>
+
+
+    <!-- =========================
+         STATISTICS
+    ========================= -->
+
+    <div class="stats-grid">
+
+
+        <!-- TOTAL HOSPITALS -->
+
+        <div class="stat-card">
+
+            <div class="stat-icon">
+                🏥
+            </div>
+
+            <div class="stat-title">
+                Total Hospitals
+            </div>
+
+            <div class="stat-value">
+                {{ total_hospitals }}
+            </div>
+
+        </div>
+
+
+        <!-- PENDING -->
+
+        <div class="stat-card">
+
+            <div class="stat-icon">
+                ⏳
+            </div>
+
+            <div class="stat-title">
+                Pending Verification
+            </div>
+
+            <div class="stat-value">
+                {{ pending_hospitals }}
+            </div>
+
+        </div>
+
+
+        <!-- VERIFIED -->
+
+        <div class="stat-card">
+
+            <div class="stat-icon">
+                ✅
+            </div>
+
+            <div class="stat-title">
+                Verified Hospitals
+            </div>
+
+            <div class="stat-value">
+                {{ verified_hospitals }}
+            </div>
+
+        </div>
+
+
+        <!-- ACTIVE -->
+
+        <div class="stat-card">
+
+            <div class="stat-icon">
+                🟢
+            </div>
+
+            <div class="stat-title">
+                Active Hospitals
+            </div>
+
+            <div class="stat-value">
+                {{ active_hospitals }}
+            </div>
+
+        </div>
+
+
+        <!-- TOTAL BLOOD -->
+
+        <div class="stat-card">
+
+            <div class="stat-icon">
+                🩸
+            </div>
+
+            <div class="stat-title">
+                Total Blood Units
+            </div>
+
+            <div class="stat-value">
+                {{ total_blood_units }}
+            </div>
+
+        </div>
+
+
+        <!-- LOW STOCK -->
+
+        <div class="stat-card">
+
+            <div class="stat-icon">
+                🟠
+            </div>
+
+            <div class="stat-title">
+                Low Stock Records
+            </div>
+
+            <div class="stat-value">
+                {{ low_stock }}
+            </div>
+
+        </div>
+
+
+        <!-- OUT OF STOCK -->
+
+        <div class="stat-card">
+
+            <div class="stat-icon">
+                🔴
+            </div>
+
+            <div class="stat-title">
+                Out of Stock
+            </div>
+
+            <div class="stat-value">
+                {{ out_of_stock }}
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         QUICK ACTIONS
+    ========================= -->
+
+    <div class="section">
+
+        <h2 class="section-title">
+            Quick Actions
+        </h2>
+
+
+        <div class="actions">
+
+
+            <a
+    href="{% url 'manage_hospitals' %}"
+    class="action">
+                <div class="action-icon">
+                    🏥
+                </div>
+
+                <h3>
+                    Manage Hospitals
+                </h3>
+
+                <p>
+                    View, verify, activate and
+                    manage registered hospitals.
+                </p>
+
+            </>
+
+
+            <a
+                href="/admin/core/bloodstock/"
+                class="action">
+
+                <div class="action-icon">
+                    🩸
+                </div>
+
+                <h3>
+                    Manage Blood Stock
+                </h3>
+
+                <p>
+                    Monitor available blood units
+                    across registered hospitals.
+                </p>
+
+            </a>
+
+
+            <a
+                href="/admin/"
+                class="action">
+
+                <div class="action-icon">
+                    ⚙️
+                </div>
+
+                <h3>
+                    Django Admin
+                </h3>
+
+                <p>
+                    Open the complete administrative
+                    control panel.
+                </p>
+
+            </a>
+
+
+            <a
+                href="/"
+                class="action">
+
+                <div class="action-icon">
+                    🏠
+                </div>
+
+                <h3>
+                    BloodConnect Home
+                </h3>
+
+                <p>
+                    Return to the main BloodConnect
+                    application.
+                </p>
+
+            </a>
+
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         FOOTER
+    ========================= -->
+
+    <div class="footer">
+
+        © 2026 BloodConnect |
+        Admin Management System
+
+    </div>
+
+
+</div>
+
+
+</body>
+
+</html>

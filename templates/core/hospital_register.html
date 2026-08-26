@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Hospital Registration | BloodConnect</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #7f0000, #c62828, #e53935);
+            padding: 35px 15px;
+        }
+
+        /* HEADER */
+
+        .top-bar {
+            width: 100%;
+            max-width: 850px;
+            margin: 0 auto 18px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: white;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .brand-icon {
+            font-size: 32px;
+        }
+
+        .brand-name {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .home-btn {
+            background: white;
+            color: #b71c1c;
+            text-decoration: none;
+            padding: 10px 17px;
+            border-radius: 8px;
+            font-weight: bold;
+        }
+
+        .home-btn:hover {
+            background: #f5f5f5;
+        }
+
+        /* MAIN CARD */
+
+        .container {
+            width: 100%;
+            max-width: 850px;
+            margin: auto;
+            background: white;
+            border-radius: 20px;
+            padding: 38px;
+            box-shadow: 0 18px 45px rgba(0, 0, 0, 0.25);
+        }
+
+        .heading {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .heading-icon {
+            font-size: 48px;
+            margin-bottom: 8px;
+        }
+
+        h1 {
+            color: #b71c1c;
+            font-size: 32px;
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            color: #777;
+            font-size: 15px;
+        }
+
+        /* MESSAGES */
+
+        .messages {
+            margin-bottom: 22px;
+        }
+
+        .msg {
+            padding: 13px 15px;
+            border-radius: 9px;
+            margin-bottom: 10px;
+            font-weight: bold;
+            background: #e8f5e9;
+            color: #2e7d32;
+            border-left: 4px solid #2e7d32;
+        }
+
+        /* SECTION */
+
+        .section {
+            margin-top: 25px;
+        }
+
+        .section-title {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #b71c1c;
+            font-size: 19px;
+            margin-bottom: 16px;
+            padding-bottom: 9px;
+            border-bottom: 1px solid #eee;
+        }
+
+        /* FORM */
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 18px;
+        }
+
+        .full {
+            grid-column: 1 / -1;
+        }
+
+        .field label {
+            display: block;
+            font-weight: bold;
+            color: #444;
+            margin-bottom: 7px;
+            font-size: 14px;
+        }
+
+        .required {
+            color: #c62828;
+        }
+
+        input,
+        textarea {
+            width: 100%;
+            padding: 13px 14px;
+            border: 1px solid #d2d2d2;
+            border-radius: 9px;
+            font-size: 15px;
+            outline: none;
+            transition: 0.2s;
+            background: #fff;
+        }
+
+        input:focus,
+        textarea:focus {
+            border-color: #c62828;
+            box-shadow: 0 0 0 3px rgba(198, 40, 40, 0.10);
+        }
+
+        textarea {
+            height: 95px;
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .hint {
+            display: block;
+            color: #888;
+            font-size: 12px;
+            margin-top: 5px;
+        }
+
+        /* REGISTER BUTTON */
+
+        .btn {
+            width: 100%;
+            padding: 15px;
+            margin-top: 28px;
+            background: linear-gradient(135deg, #b71c1c, #d32f2f);
+            color: white;
+            border: none;
+            border-radius: 9px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.25s;
+        }
+
+        .btn:hover {
+            background: linear-gradient(135deg, #8e0000, #b71c1c);
+            transform: translateY(-1px);
+        }
+
+        /* LOGIN */
+
+        .login-box {
+            text-align: center;
+            margin-top: 25px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+            color: #777;
+        }
+
+        .login-box a {
+            color: #c62828;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .login-box a:hover {
+            text-decoration: underline;
+        }
+
+        /* INFO */
+
+        .approval-info {
+            margin-top: 20px;
+            padding: 14px 16px;
+            background: #fff8e1;
+            border-radius: 9px;
+            color: #795548;
+            font-size: 13px;
+            line-height: 1.6;
+            border-left: 4px solid #ffb300;
+        }
+
+        /* FOOTER */
+
+        .footer {
+            text-align: center;
+            color: rgba(255,255,255,0.85);
+            font-size: 13px;
+            margin-top: 20px;
+        }
+
+        /* MOBILE */
+
+        @media (max-width: 650px) {
+
+            body {
+                padding: 20px 12px;
+            }
+
+            .top-bar {
+                padding: 0 4px;
+            }
+
+            .brand-name {
+                font-size: 20px;
+            }
+
+            .brand-icon {
+                font-size: 27px;
+            }
+
+            .home-btn {
+                padding: 8px 12px;
+                font-size: 13px;
+            }
+
+            .container {
+                padding: 25px 20px;
+                border-radius: 16px;
+            }
+
+            h1 {
+                font-size: 27px;
+            }
+
+            .grid {
+                grid-template-columns: 1fr;
+            }
+
+            .full {
+                grid-column: auto;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- TOP BAR -->
+
+<div class="top-bar">
+
+    <div class="brand">
+
+        <div class="brand-icon">
+            🩸
+        </div>
+
+        <div class="brand-name">
+            BloodConnect
+        </div>
+
+    </div>
+
+
+    <a href="/" class="home-btn">
+        Home
+    </a>
+
+</div>
+
+
+<!-- MAIN -->
+
+<div class="container">
+
+
+    <!-- HEADING -->
+
+    <div class="heading">
+
+        <div class="heading-icon">
+            🏥
+        </div>
+
+        <h1>
+            Hospital Registration
+        </h1>
+
+        <p class="subtitle">
+            Register your hospital and help patients find blood when they need it.
+        </p>
+
+    </div>
+
+
+    <!-- MESSAGES -->
+
+    {% if messages %}
+
+        <div class="messages">
+
+            {% for message in messages %}
+
+                <div class="msg">
+                    {{ message }}
+                </div>
+
+            {% endfor %}
+
+        </div>
+
+    {% endif %}
+
+
+    <!-- REGISTRATION FORM -->
+
+    <form method="POST">
+
+        {% csrf_token %}
+
+
+        <!-- HOSPITAL INFORMATION -->
+
+        <div class="section">
+
+            <div class="section-title">
+                🏥 Hospital Information
+            </div>
+
+
+            <div class="grid">
+
+
+                <div class="field">
+
+                    <label>
+                        Hospital Name
+                        <span class="required">*</span>
+                    </label>
+
+                    <input
+                        type="text"
+                        name="hospital_name"
+                        placeholder="Enter hospital name"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="field">
+
+                    <label>
+                        Hospital ID
+                        <span class="required">*</span>
+                    </label>
+
+                    <input
+                        type="text"
+                        name="hospital_id"
+                        placeholder="Create a unique Hospital ID"
+                        required
+                    >
+
+                    <span class="hint">
+                        This ID will be used for hospital login.
+                    </span>
+
+                </div>
+
+
+                <div class="field">
+
+                    <label>
+                        Contact Number
+                        <span class="required">*</span>
+                    </label>
+
+                    <input
+                        type="tel"
+                        name="contact_number"
+                        placeholder="Enter contact number"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="field">
+
+                    <label>
+                        State
+                        <span class="required">*</span>
+                    </label>
+
+                    <input
+                        type="text"
+                        name="state"
+                        placeholder="e.g. Uttar Pradesh"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="field">
+
+                    <label>
+                        District
+                        <span class="required">*</span>
+                    </label>
+
+                    <input
+                        type="text"
+                        name="district"
+                        placeholder="e.g. Gorakhpur"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="field">
+
+                    <label>
+                        City
+                        <span class="required">*</span>
+                    </label>
+
+                    <input
+                        type="text"
+                        name="city"
+                        placeholder="Enter city"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="field full">
+
+                    <label>
+                        Hospital Address
+                        <span class="required">*</span>
+                    </label>
+
+                    <textarea
+                        name="address"
+                        placeholder="Enter complete hospital address"
+                        required
+                    ></textarea>
+                    
+<!-- LOCATION COORDINATES -->
+
+<input
+    type="hidden"
+    name="latitude"
+    id="latitude"
+>
+
+<input
+    type="hidden"
+    name="longitude"
+    id="longitude"
+>
+
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+
+        <!-- LOGIN INFORMATION -->
+
+        <div class="section">
+
+            <div class="section-title">
+                🔐 Login Information
+            </div>
+
+
+            <div class="grid">
+
+
+                <div class="field">
+
+                    <label>
+                        Password
+                        <span class="required">*</span>
+                    </label>
+
+                    <input
+                        type="password"
+                        name="password"
+                        id="password"
+                        placeholder="Create a password"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="field">
+
+                    <label>
+                        Confirm Password
+                        <span class="required">*</span>
+                    </label>
+
+                    <input
+                        type="password"
+                        name="confirm_password"
+                        id="confirm_password"
+                        placeholder="Re-enter password"
+                        required
+                    >
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+
+        <!-- APPROVAL INFO -->
+
+        <div class="approval-info">
+
+            <strong>ℹ️ Important:</strong>
+            After registration, your hospital account will remain
+            pending until it is verified and approved by the BloodConnect
+            administrator.
+
+        </div>
+
+
+        <!-- BUTTON -->
+
+        <button
+            type="submit"
+            class="btn">
+
+            🏥 REGISTER HOSPITAL
+
+        </button>
+
+
+    </form>
+
+
+    <!-- LOGIN -->
+
+    <div class="login-box">
+
+        Already registered?
+
+        <a href="{% url 'hospital_login' %}">
+            Login Here
+        </a>
+
+    </div>
+
+
+</div>
+
+
+<div class="footer">
+
+    © 2026 BloodConnect |
+    Find Blood. Find Help. Save Lives.
+
+</div>
+
+<script>
+
+    /*
+     * Get hospital location coordinates
+     * Coordinates are stored silently in hidden fields.
+     */
+
+    window.addEventListener("load", function () {
+
+        if (!navigator.geolocation) {
+            return;
+        }
+
+        navigator.geolocation.getCurrentPosition(
+
+            function (position) {
+
+                document.getElementById("latitude").value =
+                    position.coords.latitude;
+
+                document.getElementById("longitude").value =
+                    position.coords.longitude;
+
+                console.log(
+                    "Hospital coordinates captured:",
+                    position.coords.latitude,
+                    position.coords.longitude
+                );
+
+            },
+
+            function (error) {
+
+                console.log(
+                    "Hospital location unavailable:",
+                    error.message
+                );
+
+            },
+
+            {
+                enableHighAccuracy: true,
+                timeout: 10000,
+                maximumAge: 300000
+            }
+
+        );
+
+    });
+
+</script>
+
+
+</body>
+
+</html>
